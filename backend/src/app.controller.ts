@@ -8,7 +8,14 @@ export class AppController {
 
   @Public()
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello() {
+    return {
+      code: 200,
+      message: '手工帮 (www.oobang.com) 后端服务已启动成功！',
+      data: {
+        time: new Date().toLocaleString(),
+        version: '1.0.0'
+      }
+    };
   }
 }

@@ -19,7 +19,14 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getHello() {
-        return this.appService.getHello();
+        return {
+            code: 200,
+            message: '手工帮 (www.oobang.com) 后端服务已启动成功！',
+            data: {
+                time: new Date().toLocaleString(),
+                version: '1.0.0'
+            }
+        };
     }
 };
 exports.AppController = AppController;
@@ -28,7 +35,7 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHello", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
