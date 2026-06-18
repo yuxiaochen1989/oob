@@ -4,6 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RedisModule } from './redis/redis.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
 
 @Module({
   imports: [
@@ -29,8 +33,22 @@ import { RedisModule } from './redis/redis.module';
     }),
     // 3. 全局 Redis 模块
     RedisModule,
+    // 4. 鉴权模块
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // 全局注册 JWT 守卫，所有接口默认需要登录（可用 @Public() 放行）
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    // 全局注册 角色 守卫
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}
