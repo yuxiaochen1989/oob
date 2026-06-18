@@ -13,6 +13,25 @@
 			}
 		},
 		{
+			"path": "pages/publish/index",
+			"style": {
+				"navigationBarTitleText": "发布",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/publish/note",
+			"style": {
+				"navigationBarTitleText": "发布笔记"
+			}
+		},
+		{
+			"path": "pages/publish/course",
+			"style": {
+				"navigationBarTitleText": "发布教程"
+			}
+		},
+		{
 			"path": "pages/activity/index",
 			"style": {
 				"navigationBarTitleText": "同城活动"
@@ -55,6 +74,12 @@
 				"iconPath": "static/logo.png",
 				"selectedIconPath": "static/logo.png",
 				"text": "教程"
+			},
+			{
+				"pagePath": "pages/publish/index",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "发布"
 			},
 			{
 				"pagePath": "pages/activity/index",
