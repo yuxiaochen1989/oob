@@ -11,6 +11,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { ActivityModule } from './activity/activity.module';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ActivityModule } from './activity/activity.module';
     UserModule,
     PostModule,
     ActivityModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [

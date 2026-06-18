@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/shop/index",
+			"style": {
+				"navigationBarTitleText": "积分商城"
+			}
+		},
+		{
 			"path": "pages/publish/note",
 			"style": {
 				"navigationBarTitleText": "发布笔记"

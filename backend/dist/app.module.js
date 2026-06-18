@@ -20,6 +20,7 @@ const roles_guard_1 = require("./auth/guards/roles.guard");
 const user_module_1 = require("./user/user.module");
 const post_module_1 = require("./post/post.module");
 const activity_module_1 = require("./activity/activity.module");
+const shop_module_1 = require("./shop/shop.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -41,6 +42,7 @@ exports.AppModule = AppModule = __decorate([
             user_module_1.UserModule,
             post_module_1.PostModule,
             activity_module_1.ActivityModule,
+            shop_module_1.ShopModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
