@@ -16,20 +16,12 @@ import { RolesGuard } from './auth/guards/roles.guard';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // 2. TypeORM MySQL 数据库配置
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
-        password: configService.get<string>('DB_PASS'),
-        database: configService.get<string>('DB_NAME'),
-        autoLoadEntities: true,
-        synchronize: true, // 开发环境开启自动同步表结构，生产环境建议关闭
-      }),
+    // 2. TypeORM 数据库配置 (为方便您预览效果，这里临时使用 SQLite 替代 MySQL)
+    TypeOrmModule.forRoot({
+      type: 'better-sqlite3' as any,
+      database: 'database.sqlite',
+      autoLoadEntities: true,
+      synchronize: true, // 开发环境开启自动同步表结构
     }),
     // 3. 全局 Redis 模块
     RedisModule,

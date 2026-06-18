@@ -1,45 +1,31 @@
-import { Injectable, Inject } from '@nestjs/common';
-import Redis from 'ioredis';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RedisService {
-  constructor(@Inject('REDIS_CLIENT') private readonly redisClient: Redis) {}
+  // 临时使用内存 Map 模拟 Redis，以便在无 Redis 环境下运行看效果
+  private memoryCache = new Map<string, any>();
 
-  /**
-   * 设置键值对
-   * @param key 键
-   * @param value 值
-   * @param expireTime 过期时间（秒）
-   */
   async set(key: string, value: any, expireTime?: number): Promise<void> {
     const strValue = typeof value === 'object' ? JSON.stringify(value) : value;
+    this.memoryCache.set(key, strValue);
     if (expireTime) {
-      await this.redisClient.set(key, strValue, 'EX', expireTime);
-    } else {
-      await this.redisClient.set(key, strValue);
+      setTimeout(() => {
+        this.memoryCache.delete(key);
+      }, expireTime * 1000);
     }
   }
 
-  /**
-   * 获取值
-   * @param key 键
-   */
   async get(key: string): Promise<string | null> {
-    return this.redisClient.get(key);
+    return this.memoryCache.get(key) || null;
   }
 
-  /**
-   * 删除键
-   * @param key 键
-   */
   async del(key: string): Promise<number> {
-    return this.redisClient.del(key);
+    const existed = this.memoryCache.has(key);
+    this.memoryCache.delete(key);
+    return existed ? 1 : 0;
   }
 
-  /**
-   * 获取 Redis 原生客户端，用于复杂操作（如 GEO、分布式锁等）
-   */
-  getClient(): Redis {
-    return this.redisClient;
+  getClient(): any {
+    return null;
   }
 }
