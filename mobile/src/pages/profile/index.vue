@@ -32,14 +32,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
 import { useUserStore } from '../../store/user';
 import { showConfirmDialog } from 'vant';
 
 const userStore = useUserStore();
 
-onMounted(() => {
-  if (userStore.token && !userStore.userInfo) {
+onShow(() => {
+  // 每次进入页面时检查
+  if (!userStore.token) {
+    uni.navigateTo({ url: '/pages/login/index' });
+    return;
+  }
+  
+  if (!userStore.userInfo) {
     userStore.fetchUserInfo();
   }
 });
@@ -54,6 +60,8 @@ const onLogout = () => {
     message: '确定要退出登录吗？',
   }).then(() => {
     userStore.logout();
+    // 退出后立刻跳转登录页
+    uni.navigateTo({ url: '/pages/login/index' });
   }).catch(() => {
     // on cancel
   });
