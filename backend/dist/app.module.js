@@ -18,6 +18,7 @@ const core_1 = require("@nestjs/core");
 const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
 const roles_guard_1 = require("./auth/guards/roles.guard");
 const user_module_1 = require("./user/user.module");
+const post_module_1 = require("./post/post.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -37,6 +38,7 @@ exports.AppModule = AppModule = __decorate([
             redis_module_1.RedisModule,
             auth_module_1.AuthModule,
             user_module_1.UserModule,
+            post_module_1.PostModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
