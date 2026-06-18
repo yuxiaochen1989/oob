@@ -2,7 +2,7 @@ import axios from 'axios';
 import { showToast } from 'vant';
 
 const request = axios.create({
-  baseURL: 'http://localhost:3000', // 后端地址
+  baseURL: '/api', // 通过 vite 代理到后端
   timeout: 10000,
 });
 
