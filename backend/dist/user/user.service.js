@@ -85,7 +85,13 @@ let UserService = class UserService {
         }
         const user = await this.userRepository.findOne({
             where: username ? { username } : { phone },
-            select: ['id', 'username', 'phone', 'password', 'status'],
+            select: {
+                id: true,
+                username: true,
+                phone: true,
+                password: true,
+                status: true,
+            },
         });
         if (!user) {
             throw new common_1.BadRequestException('用户不存在');

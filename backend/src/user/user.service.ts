@@ -50,7 +50,13 @@ export class UserService {
     // 根据账号或手机号查找用户，注意密码字段默认 selected: false，需手动加上
     const user = await this.userRepository.findOne({
       where: username ? { username } : { phone },
-      select: ['id', 'username', 'phone', 'password', 'status'],
+      select: {
+        id: true,
+        username: true,
+        phone: true,
+        password: true,
+        status: true,
+      },
     });
 
     if (!user) {
