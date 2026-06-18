@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
     RedisModule,
     // 4. 鉴权模块
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

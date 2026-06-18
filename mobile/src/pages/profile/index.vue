@@ -3,10 +3,14 @@
     <van-nav-bar title="我的" />
     <view class="content">
       <view class="user-info">
-        <van-image round width="5rem" height="5rem" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-        <view class="detail">
-          <text class="nickname">未登录</text>
-          <text class="points">积分：0</text>
+        <van-image round width="5rem" height="5rem" :src="userStore.userInfo?.avatar || 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'" />
+        <view class="detail" v-if="userStore.token && userStore.userInfo">
+          <text class="nickname">{{ userStore.userInfo.nickname || userStore.userInfo.username }}</text>
+          <text class="points">积分：{{ userStore.userInfo.points || 0 }}</text>
+        </view>
+        <view class="detail" v-else @click="goLogin">
+          <text class="nickname">点击登录</text>
+          <text class="points">登录后享受更多特权</text>
         </view>
       </view>
       
@@ -17,14 +21,43 @@
         <van-cell title="积分商城" is-link />
       </van-cell-group>
       
-      <view class="btn-wrap">
-        <van-button type="primary" block>点击登录</van-button>
+      <view class="btn-wrap" v-if="userStore.token">
+        <van-button type="danger" block @click="onLogout">退出登录</van-button>
+      </view>
+      <view class="btn-wrap" v-else>
+        <van-button type="primary" block @click="goLogin">去登录</van-button>
       </view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useUserStore } from '../../store/user';
+import { showConfirmDialog } from 'vant';
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  if (userStore.token && !userStore.userInfo) {
+    userStore.fetchUserInfo();
+  }
+});
+
+const goLogin = () => {
+  uni.navigateTo({ url: '/pages/login/index' });
+};
+
+const onLogout = () => {
+  showConfirmDialog({
+    title: '提示',
+    message: '确定要退出登录吗？',
+  }).then(() => {
+    userStore.logout();
+  }).catch(() => {
+    // on cancel
+  });
+};
 </script>
 
 <style lang="less">
